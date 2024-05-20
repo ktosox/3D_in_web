@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3 uid="uid://bym05j0y7lh2r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tcrtw"]
+
+[sub_resource type="Animation" id="Animation_a38f3"]
+resource_name = "new_animation"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3, 4),
+"transitions": PackedFloat32Array(1, -2, 0.5, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.5, 0.5, 0.5), Vector3(2, 2, 2), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cfsm0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mt3s1"]
+_data = {
+"RESET": SubResource("Animation_cfsm0"),
+"new_animation": SubResource("Animation_a38f3")
+}
+
+[sub_resource type="Animation" id="Animation_2kwvq"]
+resource_name = "new_animation"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.3, 4.8, 6.9),
+"transitions": PackedFloat32Array(1, 0.5, 0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.61443, 0.0436332, 0), Vector3(0.860447, -0.146608, 0), Vector3(0.86114, 3.66183, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nclpw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.86114, 3.66183, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_51lga"]
+_data = {
+"RESET": SubResource("Animation_nclpw"),
+"new_animation": SubResource("Animation_2kwvq")
+}
+
+[sub_resource type="Environment" id="Environment_f6kpa"]
+background_mode = 1
+background_color = Color(0.989437, 0.650107, 0.823477, 1)
+background_energy_multiplier = 0.4
+ambient_light_source = 3
+ambient_light_color = Color(1, 0.529412, 1, 1)
+ambient_light_energy = 0.5
+
+[node name="World" type="Node3D"]
+
+[node name="Box" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.867699, -0.377086, -0.32389, 0, 0.651573, -0.758586, 0.49709, -0.658224, -0.565369, 0, 0, 0)
+mesh = SubResource("BoxMesh_tcrtw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Box"]
+libraries = {
+"": SubResource("AnimationLibrary_mt3s1")
+}
+autoplay = "new_animation"
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Box"]
+libraries = {
+"": SubResource("AnimationLibrary_51lga")
+}
+autoplay = "new_animation"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.909621, 0.41544, 0, -0.41544, 0.909621, 0, 2.13318, 7)
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f6kpa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.273791, 0, 0.961789, 0, 1, 0, -0.961789, 0, 0.273791, 0, 0, 0)
+light_color = Color(0.647059, 1, 1, 1)
+light_energy = 0.5
+sky_mode = 1
